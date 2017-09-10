@@ -91,7 +91,7 @@ gulp.task('copy', function() {
     .pipe(gulp.dest('vendor/font-awesome'))
 })
 
-gulp.task( 'deploy', function () {
+gulp.task( 'publish', ['default'], function () {
 
     var conn = ftp.create( {
         host:     credentials.host,
@@ -113,7 +113,7 @@ gulp.task( 'deploy', function () {
     // turn off buffering in gulp.src for best performance
 
     return gulp.src( globs, { base: '.', buffer: false } )
-        .pipe( conn.newer( '/httpdocs' ) ) // only upload newer files
+        //.pipe( conn.newer( '/httpdocs' ) ) // only upload newer files
         .pipe( conn.dest( '/httpdocs' ) );
 
 } );
@@ -140,6 +140,3 @@ gulp.task('dev', ['browserSync', 'sass', 'minify-css', 'minify-js'], function() 
   gulp.watch('js/**/*.js', browserSync.reload);
   gulp.watch('css/**/*.css', browserSync.reload);
 });
-
-// Bauen und veröffentlichen
-gulp.task('publish', ['default', 'deploy']);
