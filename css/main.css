@@ -1,0 +1,12 @@
+img {
+    box-shadow: 6px 3px 22px 1px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.image {
+    margin: 0 auto;
+    width: 100%;
+    display: block;
+}
