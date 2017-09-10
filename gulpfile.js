@@ -6,6 +6,9 @@ var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
 var pkg = require('./package.json');
+var gutil = require( 'gulp-util' );
+var ftp = require( 'vinyl-ftp' );
+var credentials = require('./ftp_credentials.json')
 
 // Set the banner content
 var banner = ['/*!\n',
@@ -88,6 +91,33 @@ gulp.task('copy', function() {
     .pipe(gulp.dest('vendor/font-awesome'))
 })
 
+gulp.task( 'deploy', function () {
+
+    var conn = ftp.create( {
+        host:     credentials.host,
+        user:     credentials.username,
+        password: credentials.password,
+        parallel: 10,
+        log:      gutil.log
+    } );
+
+    var globs = [
+        'img/**',
+        'css/**',
+        'js/**',
+        'vendor/**',
+        '*.html'
+    ];
+
+    // using base = '.' will transfer everything to /public_html correctly
+    // turn off buffering in gulp.src for best performance
+
+    return gulp.src( globs, { base: '.', buffer: false } )
+        .pipe( conn.newer( '/httpdocs' ) ) // only upload newer files
+        .pipe( conn.dest( '/httpdocs' ) );
+
+} );
+
 // Default task
 gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy']);
 
@@ -110,3 +140,6 @@ gulp.task('dev', ['browserSync', 'sass', 'minify-css', 'minify-js'], function() 
   gulp.watch('js/**/*.js', browserSync.reload);
   gulp.watch('css/**/*.css', browserSync.reload);
 });
+
+// Bauen und veröffentlichen
+gulp.task('publish', ['default', 'deploy']);
