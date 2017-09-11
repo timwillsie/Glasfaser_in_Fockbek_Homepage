@@ -107,7 +107,8 @@ gulp.task( 'publish', ['default'], function () {
         'js/**',
         'vendor/**',
         '*.html',
-	'*.ico'
+	'*.ico',
+	'*.txt'
     ];
 
     // using base = '.' will transfer everything to /public_html correctly
