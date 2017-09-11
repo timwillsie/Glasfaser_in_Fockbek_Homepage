@@ -113,8 +113,7 @@ gulp.task( 'publish', ['default'], function () {
     // turn off buffering in gulp.src for best performance
 
     return gulp.src( globs, { base: '.', buffer: false } )
-        //.pipe( conn.newer( '/httpdocs' ) ) // only upload newer files
-        .pipe( conn.dest( '/httpdocs' ) );
+        .pipe( conn.dest( credentials.folder ) );
 
 } );
 
