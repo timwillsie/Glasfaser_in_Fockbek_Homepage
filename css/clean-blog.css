@@ -145,7 +145,6 @@ body {
         transform: translate3d(0, 100%, 0); } }
 
 header.masthead {
-  margin-bottom: 50px;
   background: no-repeat left center;
   background-color: #777777;
   background-attachment: scroll;
