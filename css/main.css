@@ -24,7 +24,7 @@ img {
 }
 
 #main-header {
-    background-image: url('../img/dorfbrunnen_glasfaser.png');
+    background-image: url('../img/dorfbrunnen_glasfaser.jpg');
 }
 
 @media only screen and (max-width: 1170px) {
@@ -32,6 +32,6 @@ img {
         width: inherit;
     }
     #main-header {
-        background-image: url('../img/dorfbrunnen_glasfaser_mobile.png');
+        background-image: url('../img/dorfbrunnen_glasfaser_mobile.jpg');
     }
 }
