@@ -23,8 +23,15 @@ img {
     margin-top: 20px;
 }
 
+#main-header {
+    background-image: url('../img/dorfbrunnen_glasfaser.png');
+}
+
 @media only screen and (max-width: 1170px) {
     img {
         width: inherit;
+    }
+    #main-header {
+        background-image: url('../img/dorfbrunnen_glasfaser_mobile.png');
     }
 }
