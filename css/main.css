@@ -152,6 +152,11 @@ img {
     border-color: #1DA851;
 }
 
+blockquote {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
 /* mobile */
 
 @media only screen and (max-width: 1170px) {
