@@ -108,6 +108,7 @@ gulp.task('publish', ['default'], function () {
         'js/**',
         'vendor/**',
         '*.html',
+        '.htaccess',
         '*.ico',
         '*.txt'
     ];
