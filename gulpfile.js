@@ -123,7 +123,7 @@ gulp.task('publish', ['default'], function () {
             skipBinary: true
         }))
         .pipe(replace('$last_updated$', function () {
-            return require('child_process').execSync('date "+%Y-%m-%d %H:%M:%S"');
+            return require('child_process').execSync('date /T');
         },{
             skipBinary: true
         }))
@@ -141,7 +141,7 @@ gulp.task('browserSync', function () {
             baseDir: ''
         },
     })
-})
+});
 
 // Dev task with browserSync
 gulp.task('dev', ['browserSync', 'sass', 'minify-css', 'minify-js'], function () {
