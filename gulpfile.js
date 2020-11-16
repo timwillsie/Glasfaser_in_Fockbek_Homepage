@@ -34,7 +34,7 @@ gulp.task('sass', function () {
 });
 
 // Minify compiled CSS
-gulp.task('minify-css', ['sass'], function () {
+gulp.task('minify-css', gulp.series('sass', function () {
     return gulp.src('css/clean-blog.css')
         .pipe(cleanCSS({
             compatibility: 'ie8'
@@ -46,7 +46,7 @@ gulp.task('minify-css', ['sass'], function () {
         .pipe(browserSync.reload({
             stream: true
         }))
-});
+}));
 
 // Minify custom JS
 gulp.task('minify-js', function () {
@@ -81,7 +81,7 @@ gulp.task('copy', function () {
     gulp.src(['node_modules/popper.js/dist/umd/popper.js', 'node_modules/popper.js/dist/umd/popper.min.js'])
         .pipe(gulp.dest('vendor/popper'))
 
-    gulp.src([
+    return gulp.src([
         'node_modules/font-awesome/**',
         '!node_modules/font-awesome/**/*.map',
         '!node_modules/font-awesome/.npmignore',
@@ -92,7 +92,10 @@ gulp.task('copy', function () {
         .pipe(gulp.dest('vendor/font-awesome'))
 })
 
-gulp.task('publish', ['default'], function () {
+// Default task
+gulp.task('default', gulp.series('sass', 'minify-css', 'minify-js', 'copy'));
+
+gulp.task('publish', gulp.series('default', function () {
 
     var conn = ftp.create({
         host: credentials.host,
@@ -129,10 +132,7 @@ gulp.task('publish', ['default'], function () {
         }))
         .pipe(conn.dest(credentials.folder));
 
-});
-
-// Default task
-gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy']);
+}));
 
 // Configure the browserSync task
 gulp.task('browserSync', function () {
@@ -144,7 +144,7 @@ gulp.task('browserSync', function () {
 });
 
 // Dev task with browserSync
-gulp.task('dev', ['browserSync', 'sass', 'minify-css', 'minify-js'], function () {
+gulp.task('dev', gulp.series('browserSync', 'sass', 'minify-css', 'minify-js', function () {
     gulp.watch('scss/*.scss', ['sass']);
     gulp.watch('css/*.css', ['minify-css']);
     gulp.watch('js/*.js', ['minify-js']);
@@ -152,4 +152,4 @@ gulp.task('dev', ['browserSync', 'sass', 'minify-css', 'minify-js'], function ()
     gulp.watch('*.html', browserSync.reload);
     gulp.watch('js/**/*.js', browserSync.reload);
     gulp.watch('css/**/*.css', browserSync.reload);
-});
+}));
