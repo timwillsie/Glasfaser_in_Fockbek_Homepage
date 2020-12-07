@@ -4,3 +4,4 @@ logs/
 .idea/
 ftp_credentials.json
 google*.html
+vendor/*
